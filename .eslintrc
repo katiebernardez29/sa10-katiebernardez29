@@ -16,13 +16,12 @@
     no-unused-vars: ["error", { "vars": "all", "args": "none" }],
     no-underscore-dangle: 0,
     arrow-body-style: ["error", "always"],
-    no-shadow: ["error", { "allow": ["done", "res", "cb", "err", "resolve", "reject"] }],
+    no-shadow: ["error", { "allow": ["done", "res", "cb", "err", "resolve", "reject", "response", "convo"] }],
     no-use-before-define: ["error", { "functions": false }],
     max-len: 0,
-    no-param-reassign: 0
+    no-param-reassign: 0,
   },
   plugins: [
     'import'
   ]
 }
-
