@@ -58,6 +58,10 @@ controller.on('direct_message', (bot, message) => {
   bot.reply(message, 'yeet');
 });
 
+controller.on('outgoing_webhook', (bot, message) => {
+  bot.reply(message, 'yeah');
+});
+
 let userType = '';
 let userLocation = '';
 
@@ -132,10 +136,6 @@ function results(type, location, convo) {
     convo.next();
   });
 }
-
-controller.on('outgoing_webhook', (bot, message) => {
-  bot.replyPublic(message, 'yeah yeah');
-});
 
 // enable/disable cross origin resource sharing if necessary
 app.use(cors());
