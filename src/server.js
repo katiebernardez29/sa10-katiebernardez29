@@ -46,7 +46,7 @@ controller.hears(['hello', 'hi', 'howdy'], ['direct_message'], (bot, message) =>
   });
 });
 
-controller.hears(['help'], ['direct_mention'], (bot, message) => {
+controller.hears('help', ['direct_mention'], (bot, message) => {
   bot.reply(message, 'If you type hungry, I can give you food recommendations.');
 });
 
@@ -61,7 +61,7 @@ controller.on('direct_message', (bot, message) => {
 let userType = '';
 let userLocation = '';
 
-controller.hears(['hungry'], ['direct_mention', 'direct_message'], (bot, message) => {
+controller.hears('hungry', ['direct_mention', 'direct_message'], (bot, message) => {
   bot.startConversation(message, (err, convo) => {
     convo.ask('Would you like food recomendations near you?', [
       {
