@@ -46,23 +46,50 @@ controller.hears(['hello', 'hi', 'howdy'], ['direct_message'], (bot, message) =>
   });
 });
 
-// controller.on('user_typing', (bot, message) => {
-//   bot.reply(message, 'stop typing!');
-// });
+controller.hears(['help'], ['direct_mention'], (bot, message) => {
+  bot.reply(message, 'If you type hungry, I can give you food recommendations.');
+});
+
+controller.on('direct_mention', (bot, message) => {
+  bot.reply(message, 'sup');
+});
+
+controller.on('direct_message', (bot, message) => {
+  bot.reply(message, 'yeet');
+});
+
 let userType = '';
 let userLocation = '';
 
 controller.hears(['hungry'], ['ambient', 'direct_message'], (bot, message) => {
-  bot.startConversation(message, askFood);
+  bot.startConversation(message, (err, convo) => {
+    convo.ask('Would you like food recomendations near you?', [
+      {
+        pattern: bot.utterances.yes,
+        callback(response, convo) {
+          convo.say('Great!');
+          askType(response, convo);
+          convo.next();
+        },
+      },
+      {
+        pattern: bot.utterances.no,
+        callback(response, convo) {
+          convo.say('Perhaps later.');
+          convo.next();
+        },
+      },
+      {
+        default: true,
+        callback(response, convo) {
+          convo.repeat();
+          convo.next();
+        },
+      },
+    ], {}, 'default');
+  });
 });
 
-function askFood(response, convo) {
-  convo.ask('Would you like food recomendations near you?', (response, convo) => {
-    convo.say('Great!');
-    askType(response, convo);
-    convo.next();
-  });
-}
 function askType(response, convo) {
   convo.ask('What type of food are you interested in?', (response, convo) => {
     userType = response.text;
